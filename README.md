@@ -1,4 +1,4 @@
-# project1
+# Flutter Login and Registration
 
 A new Flutter project.
 
