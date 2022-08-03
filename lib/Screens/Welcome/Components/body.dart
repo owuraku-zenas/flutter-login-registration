@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:project1/Screens/Login/login_screen.dart';
 import 'package:project1/Screens/Welcome/Components/background.dart';
 import 'package:project1/constants.dart';
@@ -39,7 +38,7 @@ class Body extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginScreen();
+                      return const LoginScreen();
                     },
                   ),
                 );
