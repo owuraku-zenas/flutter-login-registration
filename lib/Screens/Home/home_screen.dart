@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: Row(
                     children: [
-                      const Text("Password",
+                      const Text("Field",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black26)),

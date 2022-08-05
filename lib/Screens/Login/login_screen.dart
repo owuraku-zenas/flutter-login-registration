@@ -23,9 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = "";
   String passwordInput = "";
   String errorMessage = "";
+  var isLoaded = false;
 
   getUserData() async {
     setState(() {
+      isLoaded = true;
       errorMessage = "";
       email = "";
       password = "";
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password = "";
         passwordInput = "";
         errorMessage = "";
-        
+
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
@@ -58,11 +60,13 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         setState(() {
           errorMessage = "Login Failed";
+          isLoaded = false;
         });
       }
     } else {
       setState(() {
         errorMessage = "All Input Must be filled";
+        isLoaded = false;
       });
     }
   }
@@ -71,62 +75,68 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        widthFactor: double.infinity,
-        heightFactor: size.height,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              // ignore: prefer_const_constructors
-              Text(
-                "Login",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
+      body: Visibility(
+        visible: !isLoaded,
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+        child: Center(
+          widthFactor: double.infinity,
+          heightFactor: size.height,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                // ignore: prefer_const_constructors
+                Text(
+                  "Login",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.red),
-              ),
-              RoundedInputField(
-                hintText: "Enter Email",
-                onChanged: (value) {
-                  setState(() {
-                    emailInput = value;
-                  });
-                },
-              ),
-              RoundedPasswordField(
-                onChanged: (value) {
-                  setState(() {
-                    passwordInput = value;
-                  });
-                },
-              ),
-              RoundedButton(
-                  text: "LOGIN",
-                  press: () {
-                    getUserData();
+                SizedBox(height: size.height * 0.03),
+                Text(
+                  errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                ),
+                RoundedInputField(
+                  hintText: "Enter Email",
+                  onChanged: (value) {
+                    setState(() {
+                      emailInput = value;
+                    });
                   },
-                  color: primaryColor),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const SignUpScreen();
-                      },
-                    ),
-                  );
-                },
-              )
-            ],
+                ),
+                RoundedPasswordField(
+                  onChanged: (value) {
+                    setState(() {
+                      passwordInput = value;
+                    });
+                  },
+                ),
+                RoundedButton(
+                    text: "LOGIN",
+                    press: () {
+                      getUserData();
+                    },
+                    color: primaryColor),
+                SizedBox(height: size.height * 0.03),
+                AlreadyHaveAnAccountCheck(
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const SignUpScreen();
+                        },
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

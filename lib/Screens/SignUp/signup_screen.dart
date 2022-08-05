@@ -27,9 +27,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String name = "";
   String nameInput = "";
   String errorMessage = "";
+  var isLoaded = false;
 
   signUp() async {
     setState(() {
+      isLoaded = true;
       errorMessage = "";
       email = "";
       password = "";
@@ -63,11 +65,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       } else {
         setState(() {
           errorMessage = "Sign Up Failed";
+          isLoaded = false;
         });
       }
     } else {
       setState(() {
         errorMessage = "All Input Must be filled";
+        isLoaded = false;
       });
     }
   }
@@ -77,78 +81,84 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Center(
-        heightFactor: size.height,
-        widthFactor: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                "Sign Up",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
+      body: Visibility(
+        visible: !isLoaded,
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+        child: Center(
+          heightFactor: size.height,
+          widthFactor: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.red),
-              ),
-              RoundedInputField(
-                hintText: "Name",
-                onChanged: (value) {
-                  setState(() {
-                    nameInput = value;
-                  });
-                },
-              ),
-              RoundedInputField(
-                hintText: "Email",
-                onChanged: (value) {
-                  setState(() {
-                    emailInput = value;
-                  });
-                },
-              ),
-              RoundedInputField(
-                hintText: "Field of Study",
-                onChanged: (value) {
-                  setState(() {
-                    fieldInput = value;
-                  });
-                },
-              ),
-              RoundedPasswordField(
-                onChanged: (value) {
-                  setState(() {
-                    passwordInput = value;
-                  });
-                },
-              ),
-              RoundedButton(
-                text: "SIGN UP",
-                press: () {
-                  signUp();
-                },
-                color: primaryColor,
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const LoginScreen();
-                      },
-                    ),
-                  );
-                },
-                login: false,
-              )
-            ],
+                SizedBox(height: size.height * 0.03),
+                Text(
+                  errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                ),
+                RoundedInputField(
+                  hintText: "Name",
+                  onChanged: (value) {
+                    setState(() {
+                      nameInput = value;
+                    });
+                  },
+                ),
+                RoundedInputField(
+                  hintText: "Email",
+                  onChanged: (value) {
+                    setState(() {
+                      emailInput = value;
+                    });
+                  },
+                ),
+                RoundedInputField(
+                  hintText: "Field of Study",
+                  onChanged: (value) {
+                    setState(() {
+                      fieldInput = value;
+                    });
+                  },
+                ),
+                RoundedPasswordField(
+                  onChanged: (value) {
+                    setState(() {
+                      passwordInput = value;
+                    });
+                  },
+                ),
+                RoundedButton(
+                  text: "SIGN UP",
+                  press: () {
+                    signUp();
+                  },
+                  color: primaryColor,
+                ),
+                SizedBox(height: size.height * 0.03),
+                AlreadyHaveAnAccountCheck(
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const LoginScreen();
+                        },
+                      ),
+                    );
+                  },
+                  login: false,
+                )
+              ],
+            ),
           ),
         ),
       ),

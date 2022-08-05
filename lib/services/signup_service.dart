@@ -4,7 +4,7 @@ import 'package:project1/services/login_service.dart';
 
 class SignUpService {
   // ignore: constant_identifier_names
-  static const Base_URL = 'http://127.0.0.1:8000/api';
+  static const Base_URL = 'https://project1-auth.herokuapp.com/api';
 
   Future<User?> signUp(email, password, name, field) async {
     var client = http.Client();
