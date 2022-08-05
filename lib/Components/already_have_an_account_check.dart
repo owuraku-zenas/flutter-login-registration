@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Screens/Login/login_screen.dart';
+import 'package:project1/Screens/SignUp/signup_screen.dart';
 import 'package:project1/constants.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
@@ -21,7 +23,16 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
           style: const TextStyle(color: primaryColor),
         ),
         GestureDetector(
-          onDoubleTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const LoginScreen();
+                },
+              ),
+            );
+          },
           child: Text(
             login ? "Sign Up" : "Sign In",
             style: const TextStyle(
